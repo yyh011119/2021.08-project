@@ -48,7 +48,7 @@ public class Swordman_behavior : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1))
         {
             transform.localPosition += new Vector3(swordman_moveSpeed, 0, 0);
-            //Debug.Log(transform.position);
+            Debug.Log(transform.position);
         }
     }
 
