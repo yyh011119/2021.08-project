@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Swordman_behavior : MonoBehaviour
 {
@@ -25,7 +23,7 @@ public class Swordman_behavior : MonoBehaviour
     void Determine_Ally()
     {
         //아군 방향
-        if(ally == true)
+        if (ally == true)
         {
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x);
@@ -47,7 +45,7 @@ public class Swordman_behavior : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            transform.localPosition += new Vector3(swordman_moveSpeed, 0, 0);
+            transform.localPosition += new Vector3(swordman_moveSpeed*Time.deltaTime, 0, 0);
             Debug.Log(transform.position);
         }
     }

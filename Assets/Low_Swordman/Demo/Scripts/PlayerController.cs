@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
-public abstract class PlayerController :MonoBehaviour
+public abstract class PlayerController : MonoBehaviour
 {
     public bool IsSit = false;
-    public int currentJumpCount = 0; 
+    public int currentJumpCount = 0;
     public bool isGrounded = false;
     public bool OnceJumpRayCheck = false;
 

@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Swordman : PlayerController
 {
 
- 
+
 
     private void Start()
     {
 
-        m_CapsulleCollider  = this.transform.GetComponent<CapsuleCollider2D>();
+        m_CapsulleCollider = this.transform.GetComponent<CapsuleCollider2D>();
         m_Anim = this.transform.Find("model").GetComponent<Animator>();
         m_rigidbody = this.transform.GetComponent<Rigidbody2D>();
-  
+
 
     }
 
@@ -77,7 +75,7 @@ public class Swordman : PlayerController
         m_MoveX = Input.GetAxis("Horizontal");
 
 
-   
+
         GroundCheckUpdate();
 
 
@@ -127,7 +125,7 @@ public class Swordman : PlayerController
                 if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                     return;
 
-                transform.transform.Translate(Vector2.right* m_MoveX * MoveSpeed * Time.deltaTime);
+                transform.transform.Translate(Vector2.right * m_MoveX * MoveSpeed * Time.deltaTime);
 
 
 
@@ -215,7 +213,7 @@ public class Swordman : PlayerController
     }
 
 
-  
+
 
 
     protected override void LandingEvent()

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GroundSensor : MonoBehaviour {
+public class GroundSensor : MonoBehaviour
+{
 
     public PlayerController m_root;
 
@@ -10,16 +9,16 @@ public class GroundSensor : MonoBehaviour {
     void Start()
     {
         m_root = this.transform.root.GetComponent<PlayerController>();
-       
+
     }
 
- 
+
 
     ContactPoint2D[] contacts = new ContactPoint2D[1];
 
     void OnTriggerStay2D(Collider2D other)
     {
-    
+
 
         if (other.CompareTag("Ground") || other.CompareTag("Block"))
         {
@@ -40,8 +39,8 @@ public class GroundSensor : MonoBehaviour {
                 m_root.isGrounded = true;
                 m_root.currentJumpCount = 0;
             }
-         
-        
+
+
         }
     }
 
@@ -49,7 +48,7 @@ public class GroundSensor : MonoBehaviour {
     {
 
         m_root.isGrounded = false;
-     
+
     }
 
 
