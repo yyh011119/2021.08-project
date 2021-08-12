@@ -2,72 +2,100 @@
 
 public class Swordman_behavior : MonoBehaviour
 {
-    private float swordman_moveSpeed;
+    public float init_Health;
+    private float health;
+    public float init_Speed;
+    private float speed;
+    public float init_Damage;
+    private float damage;
     public bool ally;
     private Animator anim;
+    public Transform pos;
+    public Vector2 boxSize;
+    protected GameObject detect_Collider;
+    private int unit_State = 1;
 
     // Start is called before the first frame update
     void Start()
     {
+        detect_Collider = transform.Find("Detect").gameObject;
         anim = GetComponent<Animator>();
-        Determine_Ally();
+        Determine_Stats();
     }
 
     // Update is called once per frame
     void Update()
     {
-        UnitMove();
-        UnitAnime();
+        if (unit_State == 2)
+        {
+            Attack();
+        }
+
+        else if (unit_State == 1)
+        {
+            Run();
+        }
+
+        else if (unit_State == 0)
+        {
+            Stay();
+        }
     }
 
-    void Determine_Ally()
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        //아군 방향
+        Debug.Log("Collision!");
+        unit_State = 2;
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        unit_State = 1;
+    }
+    
+    private void Attack()
+    {
+        anim.SetInteger("anime_State", 2);
+        Melee_Attack();
+    }
+
+    private void Run()
+    {
+        transform.localPosition += new Vector3(speed * Time.deltaTime, 0, 0);
+        anim.SetInteger("anime_State", 1);
+    }
+
+    private void Stay()
+    {
+        anim.SetInteger("anime_State", 0);
+    }
+
+    void Determine_Stats()
+    {
+        health = init_Health;
+        damage = init_Damage;
+
+        //아군 방향 속도
         if (ally == true)
         {
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x);
             transform.localScale = scale;
-            swordman_moveSpeed = -2f;
+            speed = -init_Speed;
         }
 
-        //적 방향
+        //적 방향 속도
         else
         {
             Vector3 scale = transform.localScale;
             scale.x = -Mathf.Abs(scale.x);
             transform.localScale = scale;
-            swordman_moveSpeed = 2f;
+            speed = init_Speed;
         }
     }
 
-    void UnitMove()
+    void Melee_Attack()
     {
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            transform.localPosition += new Vector3(swordman_moveSpeed*Time.deltaTime, 0, 0);
-            Debug.Log(transform.position);
-        }
-    }
-
-    void UnitAnime()
-    {
-        //melee_State - Idle:0, Run:1, Attack:2
-        //melee_Die - Alive:0, Die:1
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            anim.SetInteger("melee_State", 1);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            anim.SetInteger("melee_State", 2);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            anim.SetInteger("melee_State", 0);
-        }
 
     }
 }
