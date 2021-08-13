@@ -2,43 +2,57 @@
 
 public class Swordman_behavior : MonoBehaviour
 {
-    public float init_Health;
-    private float health;
-    public float init_Speed;
-    private float speed;
-    public float init_Damage;
-    private float damage;
-    public bool ally;
     private Animator anim;
+    protected GameObject detect_Collider;
+    protected Rigidbody2D rigid;
     public Transform pos;
     public Vector2 boxSize;
-    protected GameObject detect_Collider;
+
+    public float health;
+    private float currentHealth;
+    public float moveSpeed;
+    private float currentMoveSpeed;
+    public float attackSpeed;
+    private float currentAttackSpeed;
+    public float damage;
+    private float currentDamage;
+    public bool ally;
+
+    
     private int unit_State = 1;
+    private float attackCooldown;
+
+    bool isDie = false;
 
     // Start is called before the first frame update
     void Start()
     {
         detect_Collider = transform.Find("Detect").gameObject;
-        anim = GetComponent<Animator>();
+        rigid = gameObject.GetComponent<Rigidbody2D>();
+        anim = gameObject.GetComponent<Animator>();
         Determine_Stats();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (unit_State == 2)
+        DieCheck();
+        if (isDie == false)
         {
-            Attack();
-        }
+            if (unit_State == 2)
+            {
+                Attack();
+            }
 
-        else if (unit_State == 1)
-        {
-            Run();
-        }
+            else if (unit_State == 1)
+            {
+                Run();
+            }
 
-        else if (unit_State == 0)
-        {
-            Stay();
+            else if (unit_State == 0)
+            {
+                Stay();
+            }
         }
     }
 
@@ -61,7 +75,7 @@ public class Swordman_behavior : MonoBehaviour
 
     private void Run()
     {
-        transform.localPosition += new Vector3(speed * Time.deltaTime, 0, 0);
+        transform.localPosition += new Vector3(currentMoveSpeed * Time.deltaTime, 0, 0);
         anim.SetInteger("anime_State", 1);
     }
 
@@ -72,8 +86,9 @@ public class Swordman_behavior : MonoBehaviour
 
     void Determine_Stats()
     {
-        health = init_Health;
-        damage = init_Damage;
+        currentHealth = health;
+        currentDamage = damage;
+        currentAttackSpeed = attackSpeed;
 
         //아군 방향 속도
         if (ally == true)
@@ -81,7 +96,7 @@ public class Swordman_behavior : MonoBehaviour
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x);
             transform.localScale = scale;
-            speed = -init_Speed;
+            currentMoveSpeed = -moveSpeed;
         }
 
         //적 방향 속도
@@ -90,12 +105,51 @@ public class Swordman_behavior : MonoBehaviour
             Vector3 scale = transform.localScale;
             scale.x = -Mathf.Abs(scale.x);
             transform.localScale = scale;
-            speed = init_Speed;
+            currentMoveSpeed = moveSpeed;
         }
+    }
+
+    void DieCheck()
+    {
+        if(currentHealth<=0)
+        {
+            if(!isDie)
+            {
+                Die();
+            }
+        }
+    }
+
+    void Die()
+    {
+        isDie = true;
+
+        rigid.velocity = Vector2.zero;
+
+        anim.SetBool("Die", true);
+        Destroy(gameObject, 2);
+
     }
 
     void Melee_Attack()
     {
+        Debug.Log(currentHealth);
+        Vector2 attackSpot = transform.Find("Detect").position;
+        Collider2D[] collider2Ds = Physics2D.OverlapPointAll(attackSpot);
+        foreach(Collider2D collider in collider2Ds)
+        {
+            if(collider.tag == "Unit")
+            {
+                collider.GetComponent<Swordman_behavior>().TakeDamage(currentDamage);
+            }
+        }
+
 
     }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth = currentHealth - damage;
+    }
 }
+
