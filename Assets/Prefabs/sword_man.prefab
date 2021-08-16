@@ -238,7 +238,7 @@ MonoBehaviour:
   health: 100
   moveSpeed: 2
   attackSpeed: 1
-  damage: 10
+  damage: 30
   ally: 0
 --- !u!61 &8072965546114509317
 BoxCollider2D:
@@ -274,7 +274,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290715225530138}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
