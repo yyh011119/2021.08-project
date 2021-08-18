@@ -9,7 +9,7 @@ public class MoveCamera : MonoBehaviour
     void Start()
     {
         //맵 길이 계산
-        mapLength = GameObject.Find("AllyBase").transform.position.x - GameObject.Find("EnemyBase").transform.position.x;
+        mapLength = GameObject.Find("EnemyBase").transform.position.x - GameObject.Find("AllyBase").transform.position.x;
     }
 
     // Update is called once per frame
