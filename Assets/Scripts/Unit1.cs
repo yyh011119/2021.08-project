@@ -17,6 +17,17 @@ public class Unit1 : LivingEntity
     {
         base.Update();
 
+        int sum = 0;
+
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(transform.Find("Detect").position, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if (collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) sum++;
+        }
+
+        if (sum != 0) unit_State = 2;
+        else if(attackCooldown <= 0.6f * attackTime * currentAttackSpeed / 0.5f) unit_State = 1;
+
         if (isDie == false)
         {
             if (unit_State == 2)
@@ -36,29 +47,6 @@ public class Unit1 : LivingEntity
         }
 
         CooldownCheck();
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Enemy"&&collision.GetComponent<LivingEntity>().isDie == false)
-        {
-            Debug.Log("Collision!");
-            unit_State = 2;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        int sum = 0;
-
-        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(transform.Find("Detect").position, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
-        foreach (Collider2D collider in collider2Ds)
-        {
-            if (collider.tag == "Enemy"&&collider.GetComponent<LivingEntity>().isDie == false) sum++;
-        }
-
-        if (sum != 0) unit_State = 2;
-        else unit_State = 1;
     }
     
     private void Attack()

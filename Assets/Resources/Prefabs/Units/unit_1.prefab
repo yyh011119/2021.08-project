@@ -280,10 +280,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeab6ad05aea3874fb6b48eae445529f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 120
   moveSpeed: 2
   attackSpeed: 1
-  damage: 30
+  damage: 20
+  isDie: 0
 --- !u!1 &1315759352830414
 GameObject:
   m_ObjectHideFlags: 0
