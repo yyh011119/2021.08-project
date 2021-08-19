@@ -7,8 +7,6 @@ public class CreateUnit : MonoBehaviour
 
     public GameObject[] unit;
     public int[] cost;
-
-    private Vector3 mouse_position;
     private PointControl pointcontrol;
 
 
@@ -34,12 +32,12 @@ public class CreateUnit : MonoBehaviour
     }
 
 
-    public void unitcreate(int n, Vector3 position)
+    public void unitcreate(int n)
     {
         if (pointcontrol.point >= cost[n])
         {
             GameObject go = GameObject.Instantiate(this.unit[n]);
-            go.transform.position = position;
+            go.transform.position = this.transform.Find("SpawnPoint").position;
             pointcontrol.point -= cost[n];
         }
     }

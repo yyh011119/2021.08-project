@@ -5,15 +5,13 @@ using UnityEngine;
 public class ButtonControl : MonoBehaviour
 {
     public int unitType;
-    public Vector3 unitPosition;
-
     private CreateUnit create;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        this.create = GameObject.Find("System(temp)").GetComponent<CreateUnit>();
+        this.create = GameObject.Find("AllyBase").GetComponent<CreateUnit>();
     }
 
     // Update is called once per frame
@@ -24,6 +22,6 @@ public class ButtonControl : MonoBehaviour
 
     public void OnClickButton()
     {
-        create.unitcreate(unitType, unitPosition);
+        create.unitcreate(unitType);
     }
 }
