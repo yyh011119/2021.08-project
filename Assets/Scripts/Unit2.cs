@@ -1,21 +1,19 @@
 ﻿using UnityEngine;
 
-public class Unit1 : LivingEntity
+public class Unit2 : LivingEntity
 {
-    private float attackDelay = 0.6f;
+    private float attackDelay = 0.05f;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-
         CooldownCheck(attackDelay);
         EnemyCheck(attackDelay);
 
@@ -36,6 +34,7 @@ public class Unit1 : LivingEntity
                 Stay();
             }
         }
+
 
     }
 
@@ -97,3 +96,6 @@ public class Unit1 : LivingEntity
     */
 
 }
+
+
+

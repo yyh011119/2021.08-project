@@ -529,10 +529,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d393dda8a6eaf4bbf4a48cf093061d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 80
-  moveSpeed: 1.5
+  health: 150
+  moveSpeed: 1.25
   attackSpeed: 1
-  damage: 25
+  damage: 30
   isDie: 0
 --- !u!1 &7509113632677348909
 GameObject:

@@ -2,13 +2,13 @@
 
 public class Enemy1 : LivingEntity
 {
-
-    private float attackCooldown;
+    private float attackDelay = 0.6f;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+
     }
 
     // Update is called once per frame
@@ -16,16 +16,8 @@ public class Enemy1 : LivingEntity
     {
         base.Update();
 
-        int sum = 0;
-
-        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(transform.Find("Detect").position, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
-        foreach (Collider2D collider in collider2Ds)
-        {
-            if (collider.tag == "Ally"&& collider.GetComponent<LivingEntity>().isDie == false) sum++;
-        }
-
-        if (sum != 0) unit_State = 2;
-        else if(attackCooldown<= 0.6f * attackTime * currentAttackSpeed / 0.5f) unit_State = 1;
+        CooldownCheck(attackDelay);
+        EnemyCheck(attackDelay);
 
         if (isDie == false)
         {
@@ -45,12 +37,11 @@ public class Enemy1 : LivingEntity
             }
         }
 
-        CooldownCheck();
     }
 
     private void Attack()
     {
-        anim.SetInteger("anime_State", 2);
+        anim.SetInteger("state", 2);
         if (attackCooldown <= 0)
         {
             Melee_Attack();
@@ -60,12 +51,12 @@ public class Enemy1 : LivingEntity
     private void Run()
     {
         transform.localPosition += new Vector3(currentMoveSpeed * Time.deltaTime, 0, 0);
-        anim.SetInteger("anime_State", 1);
+        anim.SetInteger("state", 1);
     }
 
     private void Stay()
     {
-        anim.SetInteger("anime_State", 0);
+        anim.SetInteger("state", 0);
     }
 
     void Melee_Attack()
@@ -77,24 +68,9 @@ public class Enemy1 : LivingEntity
             if (collider.tag == "Ally")
             {
                 collider.GetComponent<LivingEntity>().TakeDamage(currentDamage);
-                Debug.Log(currentHealth);
                 return;
             }
         }
-    }
-
-    public void CooldownCheck()
-    {
-        if (unit_State == 2)
-        {
-            if (attackCooldown <= 0)
-            {
-                attackCooldown = attackTime * currentAttackSpeed / 0.5f;
-            }
-
-            attackCooldown -= Time.deltaTime;
-        }
-        else attackCooldown = 0.6f * attackTime * currentAttackSpeed / 0.5f;
     }
 
 }

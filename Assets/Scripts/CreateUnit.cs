@@ -20,15 +20,6 @@ public class CreateUnit : MonoBehaviour
     void Update()
     {
 
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Instantiate(Resources.Load("Prefabs/Units/unit_1"), transform.Find("SpawnPoint").position, Quaternion.identity);
-        //}
-
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //    Instantiate(Resources.Load("Prefabs/Enemies/Enemy_1"), transform.Find("SpawnPoint").position, Quaternion.identity);
-        //}
     }
 
 

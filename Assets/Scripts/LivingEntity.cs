@@ -20,6 +20,7 @@ public class LivingEntity : MonoBehaviour
     protected float currentAttackSpeed;
     public float damage;
     protected float currentDamage;
+    protected float attackCooldown;
 
     protected int unit_State = 1;
     public bool isDie = false;
@@ -31,13 +32,13 @@ public class LivingEntity : MonoBehaviour
         rigid = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         Determine_Stats();
-        UpdateAnimClipTimes();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
         DieCheck();
+        AnimSpeedCheck();
     }
 
     void Determine_Stats()
@@ -63,26 +64,13 @@ public class LivingEntity : MonoBehaviour
             transform.localScale = scale;
             currentMoveSpeed = moveSpeed;
         }
+
     }
 
-    public void UpdateAnimClipTimes()
+    protected void AnimSpeedCheck()
     {
-        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
-        foreach (AnimationClip clip in clips)
-        {
-            switch (clip.name)
-            {
-                case "Melee_attack":
-                    attackTime = clip.length;
-                    break;
-                case "Melee_die":
-                    dieTime = clip.length;
-                    break;
-                case "Melee_run":
-                    runTime = clip.length;
-                    break;
-            }
-        }
+        anim.SetFloat("run", currentMoveSpeed);
+        anim.SetFloat("attack", currentAttackSpeed);
     }
 
     public void TakeDamage(float damage)
@@ -98,10 +86,40 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    void Die()
+    protected void Die()
     {
         isDie = true;
-        anim.SetBool("Die", true);
+        anim.SetBool("die", true);
         Destroy(gameObject, 2);
     }
+
+    protected void CooldownCheck(float attackDelay)
+    {
+        if (unit_State == 2)
+        {
+            if (attackCooldown <= 0)
+            {
+                attackCooldown = 1 / currentAttackSpeed;
+            }
+
+            attackCooldown -= Time.deltaTime;
+        }
+        else attackCooldown =  attackDelay / currentAttackSpeed;
+    }
+
+    protected void EnemyCheck(float attackDelay)
+    {
+        int sum = 0;
+
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(transform.Find("Detect").position, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if (this.tag== "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false) sum++;
+            else if (this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) sum++;
+        }
+
+        if (sum != 0) unit_State = 2;
+        else if (attackCooldown <= attackDelay / currentAttackSpeed) unit_State = 1;
+    }
+
 }
