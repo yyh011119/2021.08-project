@@ -41,7 +41,7 @@ public class LivingEntity : MonoBehaviour
         AnimSpeedCheck();
     }
 
-    void Determine_Stats()
+    protected void Determine_Stats()
     {
         currentHealth = health;
         currentDamage = damage;

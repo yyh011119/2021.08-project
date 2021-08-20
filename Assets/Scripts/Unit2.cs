@@ -43,7 +43,7 @@ public class Unit2 : LivingEntity
         anim.SetInteger("state", 2);
         if (attackCooldown <= 0)
         {
-            Melee_Attack();
+            Spear_Attack();
         }
     }
 
@@ -58,19 +58,39 @@ public class Unit2 : LivingEntity
         anim.SetInteger("state", 0);
     }
 
-    void Melee_Attack()
+    void Spear_Attack()
     {
+        int sum = 0;
+
         Vector2 attackSpot = transform.Find("Detect").position;
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
         foreach (Collider2D collider in collider2Ds)
         {
-            if (collider.tag == "Enemy")
+            if (collider.tag == "Enemy") sum++;
+        }
+
+        if(sum>=3)
+        {
+            foreach (Collider2D collider in collider2Ds)
             {
-                collider.GetComponent<LivingEntity>().TakeDamage(currentDamage);
-                Debug.Log(currentHealth);
-                return;
+                if (collider.tag == "Enemy")
+                {
+                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.25f);
+                }
             }
         }
+        else if(sum>=1)
+        {
+            foreach (Collider2D collider in collider2Ds)
+            {
+                if (collider.tag == "Enemy")
+                {
+                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage);
+                    return;
+                }
+            }
+        }
+
     }
 
     /*

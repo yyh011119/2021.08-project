@@ -10,15 +10,13 @@ public class CreateEnemy : MonoBehaviour
     public int[] enemyUnit;
     public float[] enemyTime;
 
-    private int waveNumber,waveMax;
-    private float time, timet; //  유닛소환용, 타이머용
-    private Text timer;
+    private int waveNumber = 0, waveMax;
+    private float time=0; //  유닛소환용, 타이머용
     private int m; // 분
 
     // Start is called before the first frame update
     void Start()
     {
-        timer = GameObject.Find("Timer").GetComponent<Text>();
         waveMax = enemyTime.Length;
     }
 
@@ -26,7 +24,6 @@ public class CreateEnemy : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-
 
         if(waveMax<=waveNumber)
         {
@@ -40,18 +37,17 @@ public class CreateEnemy : MonoBehaviour
             time = 0;
         }
 
-        timet += Time.deltaTime;
-        showTime(timet);
-
 
     }
 
     public void enemycreate(int n)
     {
+        Debug.Log("created!");
         GameObject go = GameObject.Instantiate(this.enemy[n]);
         go.transform.position = this.transform.Find("SpawnPoint").position;
     }
 
+    /*
     void showTime(float t)
     {
         m = 0;
@@ -64,4 +60,5 @@ public class CreateEnemy : MonoBehaviour
         t= t-t % 1;
         timer.text = m.ToString()+":"+t.ToString("N0");
     }
+    */
 }
