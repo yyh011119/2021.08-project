@@ -23,7 +23,8 @@ public class LivingEntity : MonoBehaviour
     protected float attackCooldown;
 
     protected int unit_State = 1;
-    public bool isDie = false;
+    protected bool isDie = false;
+    protected bool pointGiven = false;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -120,6 +121,12 @@ public class LivingEntity : MonoBehaviour
 
         if (sum != 0) unit_State = 2;
         else if (attackCooldown <= attackDelay / currentAttackSpeed) unit_State = 1;
+    }
+
+    public void givePoint(int givenPoint)
+    {
+        GameObject.Find("AllyBase").GetComponent<PointControl>().point += givenPoint;
+        pointGiven = true;
     }
 
 }

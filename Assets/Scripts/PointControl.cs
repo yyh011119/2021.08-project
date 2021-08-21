@@ -8,33 +8,23 @@ public class PointControl : MonoBehaviour
 {
     public int point;
     public int maxPoint;
+    public float checkTime;
     public GUIStyle style;
 
     private Text pointText;
     private float time;
-    private float checkTime;
-
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         pointText = GameObject.Find("Point").GetComponent<Text>();
-        checkTime = 0.1f;
-        maxPoint = 50;
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        time += Time.deltaTime;
-        if (time > checkTime && point < maxPoint)
-        {
-            point++;
-            time = 0;
-        }
-
-
-        pointcounter();
+        PointCheck();
+        PointCounter();
     }
 
     void OnGUI()
@@ -42,10 +32,20 @@ public class PointControl : MonoBehaviour
 
     }
 
-    void pointcounter()
+    void PointCounter()
     {
         pointText.text = point.ToString() + "/" + maxPoint.ToString();
     }
 
+    public void PointCheck()
+    {
+        time += Time.deltaTime;
+        if (time > checkTime && point < maxPoint)
+        {
+            point++;
+            time = 0;
+        }
+        if (point > maxPoint) point = maxPoint;
+    }
 
 }

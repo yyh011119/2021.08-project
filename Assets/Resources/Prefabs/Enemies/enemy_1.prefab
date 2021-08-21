@@ -534,6 +534,7 @@ MonoBehaviour:
   attackSpeed: 1
   damage: 30
   isDie: 0
+  dropPoint: 5
 --- !u!1 &7509113632677348909
 GameObject:
   m_ObjectHideFlags: 0

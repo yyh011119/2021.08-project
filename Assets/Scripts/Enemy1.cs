@@ -3,12 +3,12 @@
 public class Enemy1 : LivingEntity
 {
     private float attackDelay = 0.6f;
+    public int dropPoint;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-
     }
 
     // Update is called once per frame
@@ -36,6 +36,7 @@ public class Enemy1 : LivingEntity
                 Stay();
             }
         }
+        else if(pointGiven==false)givePoint(dropPoint);
 
     }
 

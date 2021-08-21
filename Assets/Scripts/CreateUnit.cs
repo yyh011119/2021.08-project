@@ -1,35 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CreateUnit : MonoBehaviour
+public class CreateUnit : PointControl
 {
 
     public GameObject[] unit;
     public int[] cost;
-    private PointControl pointcontrol;
 
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        this.pointcontrol = GameObject.Find("System(temp)").GetComponent<PointControl>();
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
 
     }
 
 
     public void unitcreate(int n)
     {
-        if (pointcontrol.point >= cost[n])
+        if (point >= cost[n])
         {
             GameObject go = GameObject.Instantiate(this.unit[n]);
             go.transform.position = this.transform.Find("SpawnPoint").position;
-            pointcontrol.point -= cost[n];
+            point -= cost[n];
         }
     }
 
