@@ -26,18 +26,33 @@ public class LivingEntity : MonoBehaviour
     protected bool isDie = false;
     protected bool pointGiven = false;
 
+    public GameObject hp; // hp바 구현용
+    public GameObject canvas;
+    private float h = 50.0f;
+
+    RectTransform hpBar; // hp바
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         detect_Collider = transform.Find("Detect").gameObject;
         rigid = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
+
+        canvas = GameObject.Find("Canvas");
+        hpBar = Instantiate(hp, canvas.transform).GetComponent<RectTransform>();
+
         Determine_Stats();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
+        Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
+        hpBarPosition.y += h;
+        hpBar.position = hpBarPosition;
+        hpBar.transform.GetChild(1).localScale = new Vector3(currentHealth / health, 1, 1);
+
         DieCheck();
         AnimSpeedCheck();
     }
@@ -91,6 +106,7 @@ public class LivingEntity : MonoBehaviour
     {
         isDie = true;
         anim.SetBool("die", true);
+        Destroy(hpBar.gameObject);
         Destroy(gameObject, 2);
     }
 
