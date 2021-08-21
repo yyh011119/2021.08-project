@@ -2,7 +2,7 @@
 
 public class Unit1 : LivingEntity
 {
-    private float attackDelay = 0.6f;
+    private float attackDelay = 0.65f;
 
     // Start is called before the first frame update
     protected override void Start()

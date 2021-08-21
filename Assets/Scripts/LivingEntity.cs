@@ -38,9 +38,10 @@ public class LivingEntity : MonoBehaviour
         detect_Collider = transform.Find("Detect").gameObject;
         rigid = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
-
         canvas = GameObject.Find("Canvas");
+        Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
         hpBar = Instantiate(hp, canvas.transform).GetComponent<RectTransform>();
+        hpBar.position = hpBarPosition;
 
         Determine_Stats();
     }
@@ -50,8 +51,11 @@ public class LivingEntity : MonoBehaviour
     {
         Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
         hpBarPosition.y += h;
-        hpBar.position = hpBarPosition;
-        hpBar.transform.GetChild(1).localScale = new Vector3(currentHealth / health, 1, 1);
+        if(isDie==false)
+        {
+            hpBar.position = hpBarPosition;
+            hpBar.transform.GetChild(1).localScale = new Vector3(currentHealth / health, 1, 1);
+        }
 
         DieCheck();
         AnimSpeedCheck();

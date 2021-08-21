@@ -2,7 +2,7 @@
 
 public class Enemy1 : LivingEntity
 {
-    private float attackDelay = 0.6f;
+    private float attackDelay = 0.65f;
     public int dropPoint;
 
     // Start is called before the first frame update

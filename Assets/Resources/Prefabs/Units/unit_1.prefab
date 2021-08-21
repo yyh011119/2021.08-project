@@ -78,7 +78,7 @@ SpriteRenderer:
   m_Size: {x: 0.31, y: 1.1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1216293393019812
@@ -160,7 +160,7 @@ SpriteRenderer:
   m_Size: {x: 0.82, y: 0.78}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1290715225530138
@@ -212,7 +212,7 @@ Animator:
   m_GameObject: {fileID: 1290715225530138}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6bda1f5bf4224db44b12251ff5bfe8cb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -284,8 +284,8 @@ MonoBehaviour:
   moveSpeed: 1
   attackSpeed: 1
   damage: 30
-  hp: {fileID: 414299088961597312, guid: 453c77a535c011b4990ce460741017ec, type: 3}
-  canvas: {fileID: 0}
+  hp: {fileID: 414299088961597312, guid: c527f7071a5b61a4eaffc6febd6076b5, type: 3}
+  canvas: {fileID: 1631296575084980, guid: 2e1151cbd0a77a847ab536b0f05cb03c, type: 3}
 --- !u!1 &1315759352830414
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +366,7 @@ SpriteRenderer:
   m_Size: {x: 0.57, y: 0.59}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1522166130789820
@@ -447,7 +447,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1559754614193064
@@ -559,7 +559,7 @@ SpriteRenderer:
   m_Size: {x: 0.9, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1984324914925052
@@ -640,7 +640,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &254181027100109136
