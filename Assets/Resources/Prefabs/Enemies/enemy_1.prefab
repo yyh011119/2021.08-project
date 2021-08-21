@@ -533,7 +533,7 @@ MonoBehaviour:
   moveSpeed: 1.25
   attackSpeed: 1
   damage: 30
-  hp: {fileID: 414299088961597312, guid: c527f7071a5b61a4eaffc6febd6076b5, type: 3}
+  hp: {fileID: 5605934118861126362, guid: 500b9505408d3824d9281fedc541af77, type: 3}
   canvas: {fileID: 1631296575084980, guid: 2e1151cbd0a77a847ab536b0f05cb03c, type: 3}
   dropPoint: 5
 --- !u!1 &7509113632677348909

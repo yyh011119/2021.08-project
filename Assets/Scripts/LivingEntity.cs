@@ -49,6 +49,7 @@ public class LivingEntity : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+
         Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
         hpBarPosition.y += h;
         if(isDie==false)
