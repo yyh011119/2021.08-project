@@ -1,23 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Enemy1 : LivingEntity
+public class Unit3 : LivingEntity
 {
     private float attackDelay = 0.55f;
-    public int dropPoint;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         StartCoroutine(Run());
+        if (isDie) StopAllCoroutines();
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        if (isDie) StopAllCoroutines();
     }
 
     private IEnumerator Attack()
@@ -46,16 +45,58 @@ public class Enemy1 : LivingEntity
 
     void Melee_Attack()
     {
+        int sum = 0;
+
         Vector2 attackSpot = transform.Find("Detect").position;
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
         foreach (Collider2D collider in collider2Ds)
         {
-            if (collider.tag == "Ally")
+            if (collider.tag == "Enemy") sum++;
+        }
+
+        if (sum >= 3)
+        {
+            foreach (Collider2D collider in collider2Ds)
             {
-                collider.GetComponent<LivingEntity>().TakeDamage(currentDamage);
-                return;
+                if (collider.tag == "Enemy")
+                {
+                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.5f);
+                }
+            }
+        }
+        else if (sum >= 1)
+        {
+            foreach (Collider2D collider in collider2Ds)
+            {
+                if (collider.tag == "Enemy")
+                {
+                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage);
+                    return;
+                }
             }
         }
     }
+
+    /*
+    public void UpdateAnimClipTimes()
+    {
+        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+        foreach (AnimationClip clip in clips)
+        {
+            switch (clip.name)
+            {
+                case "Melee_attack":
+                    attackTime = clip.length;
+                    break;
+                case "Melee_die":
+                    dieTime = clip.length;
+                    break;
+                case "Melee_run":
+                    runTime = clip.length;
+                    break;
+            }
+        }
+    }
+    */
 
 }
