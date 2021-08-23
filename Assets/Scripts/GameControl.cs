@@ -2,62 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
 
-    GameObject[] unit;
-    GameObject[] enemy;
-    GameObject[] UI;
-
-    public bool isWin;
-    private Text resultText;
-    private GameObject resultWindow;
+    private GameObject pauseWindow;
+    private MoveCamera camera;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        resultText = GameObject.Find("ResultText").GetComponent<Text>();
-        resultWindow = GameObject.Find("ResultWindow");
-        resultWindow.SetActive(false);
+        pauseWindow = GameObject.Find("Canvas").transform.Find("PauseWindow").gameObject;
+        camera = GameObject.Find("Main Camera").GetComponent<MoveCamera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        unit = GameObject.FindGameObjectsWithTag("Ally");
-        enemy = GameObject.FindGameObjectsWithTag("Enemy");
-        UI = GameObject.FindGameObjectsWithTag("UI");
-
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-
-            resultWindow.SetActive(true);
-            if (isWin)
-            {
-                resultText.text = "win";
-            }
-            Destroy();
-        }
+        
     }
 
-    private void Destroy()
+    public void pauseButton()
     {
-        for (int i = 0; i < unit.Length; i++)
-        {
-            Destroy(unit[i]);
-        }
-
-        for (int i = 0; i < enemy.Length; i++)
-        {
-            Destroy(enemy[i]);
-        }
-
-        for (int i = 0; i < UI.Length; i++)
-        {
-            Destroy(UI[i]);
-        }
+        Time.timeScale = 0;
+        pauseWindow.SetActive(true);
+        pauseWindow.transform.SetAsLastSibling();
+        camera.enabled = false;
     }
+
+    public void resumeButton()
+    {
+        Time.timeScale = 1;
+        pauseWindow.SetActive(false);
+        camera.enabled = true;
+    }
+    
+    public void restartButton()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("BattleScene");
+    }
+
+    public void mainScreen()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("StartScene");
+    }
+
+
 }
