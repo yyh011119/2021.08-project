@@ -75,7 +75,7 @@ public class Unit2 : LivingEntity
             {
                 if (collider.tag == "Enemy")
                 {
-                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.25f);
+                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.5f);
                 }
             }
         }

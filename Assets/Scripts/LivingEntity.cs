@@ -14,13 +14,18 @@ public class LivingEntity : MonoBehaviour
 
     public float health;
     protected float currentHealth;
-    public float moveSpeed;
-    protected float currentMoveSpeed;
-    public float attackSpeed;
-    protected float currentAttackSpeed;
     public float damage;
     protected float currentDamage;
     protected float attackCooldown;
+    public float defense;
+    protected float currentDefense;
+    public float pierce;
+    protected float currentPierce;
+    public float attackSpeed;
+    protected float currentAttackSpeed;
+    public float moveSpeed;
+    protected float currentMoveSpeed;
+
 
     protected int unit_State = 1;
     protected bool isDie = false;
@@ -66,6 +71,8 @@ public class LivingEntity : MonoBehaviour
         currentHealth = health;
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;
+        currentDefense = defense;
+        currentPierce = pierce;
 
         //아군 방향 속도
         if (tag == "Enemy")
