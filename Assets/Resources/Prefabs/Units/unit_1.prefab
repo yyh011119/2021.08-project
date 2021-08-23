@@ -197,7 +197,6 @@ Transform:
   - {fileID: 4954531293351526}
   - {fileID: 4507978557276566}
   - {fileID: 4364909317503996}
-  - {fileID: 7355525433049606202}
   - {fileID: 5851570564647571406}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -281,9 +280,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 180
-  moveSpeed: 1
-  attackSpeed: 1
   damage: 30
+  defense: 10
+  pierce: 10
+  attackSpeed: 1
+  moveSpeed: 1
   hp: {fileID: 414299088961597312, guid: c527f7071a5b61a4eaffc6febd6076b5, type: 3}
   canvas: {fileID: 1631296575084980, guid: 2e1151cbd0a77a847ab536b0f05cb03c, type: 3}
 --- !u!1 &1315759352830414
@@ -643,36 +644,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &254181027100109136
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7355525433049606202}
-  m_Layer: 0
-  m_Name: Range
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7355525433049606202
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254181027100109136}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4210157123753652}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5173774153648890040
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,11 +669,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5173774153648890040}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 0.25, z: -1.7444502}
+  m_LocalPosition: {x: -0.5, y: 0.25, z: -1.7444502}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4210157123753652}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &7034264962031978035
 BoxCollider2D:
@@ -728,5 +699,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 1}
+  m_Size: {x: 0.5, y: 1}
   m_EdgeRadius: 0

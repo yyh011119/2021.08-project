@@ -1,62 +1,45 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Unit1 : LivingEntity
 {
-    private float attackDelay = 0.65f;
+    private float attackDelay = 0.55f;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-
+        StartCoroutine(Run());
     }
 
-    // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-
-        CooldownCheck(attackDelay);
-        EnemyCheck(attackDelay);
-
-        if (isDie == false)
-        {
-            if (unit_State == 2)
-            {
-                Attack();
-            }
-
-            else if (unit_State == 1)
-            {
-                Run();
-            }
-
-            else if (unit_State == 0)
-            {
-                Stay();
-            }
-        }
-
+        if (isDie) StopAllCoroutines();
     }
 
-    private void Attack()
+    private IEnumerator Attack()
     {
         anim.SetInteger("state", 2);
-        if (attackCooldown <= 0)
+        while(true)
         {
+            yield return new WaitForSeconds(attackDelay / attackSpeed);
             Melee_Attack();
+            yield return new WaitForSeconds((1-attackDelay) / attackSpeed);
+            if (EnemyCheck() == false) break;
         }
+        yield return StartCoroutine(Run());
     }
 
-    private void Run()
+    private IEnumerator Run()
     {
-        transform.localPosition += new Vector3(currentMoveSpeed * Time.deltaTime, 0, 0);
         anim.SetInteger("state", 1);
-    }
-
-    private void Stay()
-    {
-        anim.SetInteger("state", 0);
+        while (!EnemyCheck())
+        {
+            transform.localPosition += new Vector3(currentMoveSpeed * Time.deltaTime, 0, 0);
+            yield return null;
+        }
+        yield return StartCoroutine(Attack());
     }
 
     void Melee_Attack()

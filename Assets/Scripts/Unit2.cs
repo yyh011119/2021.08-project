@@ -1,61 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Unit2 : LivingEntity
 {
-    private float attackDelay = 0.27f;
+    private float attackDelay = 0.25f;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        StartCoroutine(Run());
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        CooldownCheck(attackDelay);
-        EnemyCheck(attackDelay);
-
-        if (isDie == false)
-        {
-            if (unit_State == 2)
-            {
-                Attack();
-            }
-
-            else if (unit_State == 1)
-            {
-                Run();
-            }
-
-            else if (unit_State == 0)
-            {
-                Stay();
-            }
-        }
-
-
+        if (isDie) StopAllCoroutines();
     }
 
-    private void Attack()
+    private IEnumerator Attack()
     {
         anim.SetInteger("state", 2);
-        if (attackCooldown <= 0)
+        while (true)
         {
+            yield return new WaitForSeconds(attackDelay / attackSpeed);
             Spear_Attack();
+            yield return new WaitForSeconds((1 - attackDelay) / attackSpeed);
+            if (EnemyCheck() == false) break;
         }
+        yield return StartCoroutine(Run());
     }
 
-    private void Run()
+    private IEnumerator Run()
     {
-        transform.localPosition += new Vector3(currentMoveSpeed * Time.deltaTime, 0, 0);
         anim.SetInteger("state", 1);
-    }
-
-    private void Stay()
-    {
-        anim.SetInteger("state", 0);
+        while (!EnemyCheck())
+        {
+            transform.localPosition += new Vector3(currentMoveSpeed * Time.deltaTime, 0, 0);
+            yield return null;
+        }
+        yield return StartCoroutine(Attack());
     }
 
     void Spear_Attack()
@@ -75,7 +60,7 @@ public class Unit2 : LivingEntity
             {
                 if (collider.tag == "Enemy")
                 {
-                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.25f);
+                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.5f);
                 }
             }
         }
@@ -92,28 +77,6 @@ public class Unit2 : LivingEntity
         }
 
     }
-
-    /*
-    public void UpdateAnimClipTimes()
-    {
-        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
-        foreach (AnimationClip clip in clips)
-        {
-            switch (clip.name)
-            {
-                case "Melee_attack":
-                    attackTime = clip.length;
-                    break;
-                case "Melee_die":
-                    dieTime = clip.length;
-                    break;
-                case "Melee_run":
-                    runTime = clip.length;
-                    break;
-            }
-        }
-    }
-    */
 
 }
 

@@ -14,15 +14,17 @@ public class LivingEntity : MonoBehaviour
 
     public float health;
     protected float currentHealth;
-    public float moveSpeed;
-    protected float currentMoveSpeed;
-    public float attackSpeed;
-    protected float currentAttackSpeed;
     public float damage;
     protected float currentDamage;
-    protected float attackCooldown;
+    public float defense;
+    protected float currentDefense;
+    public float pierce;
+    protected float currentPierce;
+    public float attackSpeed;
+    protected float currentAttackSpeed;
+    public float moveSpeed;
+    protected float currentMoveSpeed;
 
-    protected int unit_State = 1;
     protected bool isDie = false;
     protected bool pointGiven = false;
 
@@ -67,6 +69,8 @@ public class LivingEntity : MonoBehaviour
         currentHealth = health;
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;
+        currentDefense = defense;
+        currentPierce = pierce;
 
         //아군 방향 속도
         if (tag == "Enemy")
@@ -115,33 +119,15 @@ public class LivingEntity : MonoBehaviour
         Destroy(gameObject, 2);
     }
 
-    protected void CooldownCheck(float attackDelay)
+    protected bool EnemyCheck() //사거리 내 적 존재여부 반환
     {
-        if (unit_State == 2)
-        {
-            if (attackCooldown <= 0)
-            {
-                attackCooldown = 1 / currentAttackSpeed;
-            }
-
-            attackCooldown -= Time.deltaTime;
-        }
-        else attackCooldown =  attackDelay / currentAttackSpeed;
-    }
-
-    protected void EnemyCheck(float attackDelay)
-    {
-        int sum = 0;
-
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(transform.Find("Detect").position, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
         foreach (Collider2D collider in collider2Ds)
         {
-            if (this.tag== "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false) sum++;
-            else if (this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) sum++;
+            if (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false) return true;
+            else if (this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) return true;
         }
-
-        if (sum != 0) unit_State = 2;
-        else if (attackCooldown <= attackDelay / currentAttackSpeed) unit_State = 1;
+        return false;
     }
 
     public void givePoint(int givenPoint)

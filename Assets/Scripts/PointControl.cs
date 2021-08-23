@@ -18,6 +18,7 @@ public class PointControl : MonoBehaviour
     protected virtual void Start()
     {
         pointText = GameObject.Find("Point").GetComponent<Text>();
+        StartCoroutine(PointUpdate(checkTime));
     }
 
     // Update is called once per frame
@@ -37,14 +38,18 @@ public class PointControl : MonoBehaviour
         pointText.text = point.ToString() + "/" + maxPoint.ToString();
     }
 
-    public void PointCheck()
+    public IEnumerator PointUpdate(float checkTime)
     {
-        time += Time.deltaTime;
-        if (time > checkTime && point < maxPoint)
+        while(point<=maxPoint)
         {
             point++;
-            time = 0;
+            yield return new WaitForSeconds(checkTime);
         }
+
+    }
+
+    public void PointCheck()
+    {
         if (point > maxPoint) point = maxPoint;
     }
 
