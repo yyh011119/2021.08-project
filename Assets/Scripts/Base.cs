@@ -19,9 +19,9 @@ public class Base : LivingEntity
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;
 
-        resultText = GameObject.Find("ResultText").GetComponent<Text>();
-        resultWindow = GameObject.Find("ResultWindow");
-        resultWindow.SetActive(false);
+        
+        resultWindow = GameObject.Find("Canvas").transform.Find("ResultWindow").gameObject;
+        resultText = resultWindow.transform.Find("ResultText").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -43,6 +43,7 @@ public class Base : LivingEntity
 
     void gameOver()
     {
+        
         resultWindow.SetActive(true);
         if(this.tag == "Ally")
         {
