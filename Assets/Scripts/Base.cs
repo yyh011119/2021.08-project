@@ -15,10 +15,11 @@ public class Base : LivingEntity
     // Start is called before the first frame update
     protected override void Start()
     {
+
         currentHealth = health;
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;
-
+        declare(1);
         
         resultWindow = GameObject.Find("Canvas").transform.Find("ResultWindow").gameObject;
         resultText = resultWindow.transform.Find("ResultText").GetComponent<Text>();
@@ -32,6 +33,8 @@ public class Base : LivingEntity
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
         UI = GameObject.FindGameObjectsWithTag("UI");
 
+
+        declare(2);
 
         if (currentHealth <= 0 & !isDie)
         {
