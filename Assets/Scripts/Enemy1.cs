@@ -4,7 +4,6 @@ using UnityEngine;
 public class Enemy1 : LivingEntity
 {
     private float attackDelay = 0.55f;
-    public int dropPoint;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -26,9 +25,9 @@ public class Enemy1 : LivingEntity
         while (true)
         {
             yield return new WaitForSeconds(attackDelay / attackSpeed);
-            Melee_Attack();
+            Melee_SingleAttack();
             yield return new WaitForSeconds((1 - attackDelay) / attackSpeed);
-            if (EnemyCheck() == false) break;
+            if (!EnemyCheck()) break;
         }
         yield return StartCoroutine(Run());
     }
@@ -42,20 +41,6 @@ public class Enemy1 : LivingEntity
             yield return null;
         }
         yield return StartCoroutine(Attack());
-    }
-
-    void Melee_Attack()
-    {
-        Vector2 attackSpot = transform.Find("Detect").position;
-        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
-        foreach (Collider2D collider in collider2Ds)
-        {
-            if (collider.tag == "Ally")
-            {
-                collider.GetComponent<LivingEntity>().TakeDamage(currentDamage);
-                return;
-            }
-        }
     }
 
 }

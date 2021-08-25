@@ -45,9 +45,9 @@ public class CreateEnemy : MonoBehaviour
             }
         }
 
-        if(wave2Max>wave2Number && HpPercent<0.5)
+        if (wave2Max > wave2Number && HpPercent < 0.5)
         {
-            if(time2 >= enemyTime2[wave2Number])
+            if (time2 >= enemyTime2[wave2Number])
             {
                 enemycreate(enemyWave2[wave2Number]);
 
@@ -55,11 +55,6 @@ public class CreateEnemy : MonoBehaviour
                 time2 = 0;
             }
         }
-
-        
-        
-
-
 
     }
     

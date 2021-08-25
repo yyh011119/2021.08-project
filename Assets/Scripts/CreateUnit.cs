@@ -17,11 +17,10 @@ public class CreateUnit : PointControl
     protected override void Update()
     {
         base.Update();
-
     }
 
 
-    public void unitcreate(int n)
+    public void unitCreate(int n)
     {
         if (point >= cost[n])
         {

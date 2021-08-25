@@ -24,6 +24,7 @@ public class LivingEntity : MonoBehaviour
     protected float currentAttackSpeed;
     public float moveSpeed;
     protected float currentMoveSpeed;
+    public int dropPoint;
 
     protected bool isDie = false;
     protected bool pointGiven = false;
@@ -31,8 +32,10 @@ public class LivingEntity : MonoBehaviour
     public GameObject hp; // hp바 구현용
     public GameObject canvas;
     private float h = 50.0f;
-
     RectTransform hpBar; // hp바
+
+    private Collider2D target;
+    private float shortest;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -98,11 +101,6 @@ public class LivingEntity : MonoBehaviour
         anim.SetFloat("attack", currentAttackSpeed);
     }
 
-    public void TakeDamage(float damage)
-    {
-        currentHealth = currentHealth - damage;
-    }
-
     protected void DieCheck()
     {
         if (currentHealth <= 0 & !isDie)
@@ -115,6 +113,7 @@ public class LivingEntity : MonoBehaviour
     {
         isDie = true;
         anim.SetBool("die", true);
+        if (dropPoint != 0) givePoint(dropPoint);
         Destroy(hpBar.gameObject);
         Destroy(gameObject, 2);
     }
@@ -130,9 +129,110 @@ public class LivingEntity : MonoBehaviour
         return false;
     }
 
-    public void givePoint(int givenPoint)
+    protected void Melee_SingleAttack()
     {
-        GameObject.Find("AllyBase").GetComponent<PointControl>().point += givenPoint;
+        target = null;
+        shortest = 999999;
+        Vector2 attackSpot = transform.Find("Detect").position;
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            //거리가 가장 가까운 살아있는 타겟 찾기
+            if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
+            {
+                float distance = Vector2.Distance(transform.position, collider.transform.position);
+                if (distance < shortest)
+                {
+                    target = collider;
+                    shortest = distance;
+                }
+            }
+        }
+        if(target!=null) target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+    }
+
+    protected void Melee_MultiAttack()
+    {
+        int sum = 0;
+
+        Vector2 attackSpot = transform.Find("Detect").position;
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
+            {
+                sum++;
+            }
+        }
+
+        if (sum >= 3)
+        {
+            foreach (Collider2D collider in collider2Ds)
+            {
+                if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
+                {
+                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.75f, currentPierce * 0.75f, 0);
+                }
+            }
+        }
+        else
+        {
+            target = null;
+            shortest = 999999;
+            foreach (Collider2D collider in collider2Ds)
+            {
+                if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
+                {
+                    float distance = Vector2.Distance(transform.position, collider.transform.position);
+                    if (distance < shortest)
+                    {
+                        target = collider;
+                        shortest = distance;
+                    }
+                }
+            }
+            if (target != null) target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+        }
+    }
+
+    protected void Ranged_SingleAttack()
+    {
+        target = null;
+        shortest = 999999;
+        Vector2 attackSpot = transform.Find("Detect").position;
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
+            {
+                float distance = Vector2.Distance(transform.position, collider.transform.position);
+                if (distance < shortest)
+                {
+                    target = collider;
+                    shortest = distance;
+                }
+            }
+        }
+        if (target != null) target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, shortest/100);
+    }
+
+    public void TakeDamage(float damage, float pierce, float delay)
+    {
+        float totalDamage = damage + pierce * 2 - currentDefense;
+        if (totalDamage <= 0) totalDamage = 1;
+        StartCoroutine(GiveDamage(totalDamage, delay));
+    }
+
+    public IEnumerator GiveDamage(float totalDamage, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        currentHealth = currentHealth - totalDamage;
+        if (currentHealth < 0) currentHealth = 0;
+    }
+
+    public void givePoint(int dropPoint)
+    {
+        GameObject.Find("AllyBase").GetComponent<PointControl>().point += dropPoint;
         pointGiven = true;
     }
 

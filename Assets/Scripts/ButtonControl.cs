@@ -22,6 +22,6 @@ public class ButtonControl : MonoBehaviour
 
     public void OnClickButton()
     {
-        create.unitcreate(unitType);
+        create.unitCreate(unitType);
     }
 }

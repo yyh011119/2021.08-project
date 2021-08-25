@@ -25,9 +25,9 @@ public class Unit3 : LivingEntity
         while (true)
         {
             yield return new WaitForSeconds(attackDelay / attackSpeed);
-            Melee_Attack();
+            Melee_MultiAttack();
             yield return new WaitForSeconds((1 - attackDelay) / attackSpeed);
-            if (EnemyCheck() == false) break;
+            if (!EnemyCheck()) break;
         }
         yield return StartCoroutine(Run());
     }
@@ -41,40 +41,6 @@ public class Unit3 : LivingEntity
             yield return null;
         }
         yield return StartCoroutine(Attack());
-    }
-
-    void Melee_Attack()
-    {
-        int sum = 0;
-
-        Vector2 attackSpot = transform.Find("Detect").position;
-        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
-        foreach (Collider2D collider in collider2Ds)
-        {
-            if (collider.tag == "Enemy") sum++;
-        }
-
-        if (sum >= 3)
-        {
-            foreach (Collider2D collider in collider2Ds)
-            {
-                if (collider.tag == "Enemy")
-                {
-                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.5f);
-                }
-            }
-        }
-        else if (sum >= 1)
-        {
-            foreach (Collider2D collider in collider2Ds)
-            {
-                if (collider.tag == "Enemy")
-                {
-                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage);
-                    return;
-                }
-            }
-        }
     }
 
     /*
