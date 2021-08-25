@@ -31,7 +31,7 @@ public class LivingEntity : MonoBehaviour
 
     public GameObject hp; // hp바 구현용
     public GameObject canvas;
-    private float h = 50.0f;
+    protected float h = 50.0f;
     RectTransform hpBar; // hp바
 
     private Collider2D target;
@@ -43,6 +43,7 @@ public class LivingEntity : MonoBehaviour
         detect_Collider = transform.Find("Detect").gameObject;
         rigid = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
+
         canvas = GameObject.Find("Canvas");
         Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
         hpBar = Instantiate(hp, canvas.transform).GetComponent<RectTransform>();
@@ -234,6 +235,31 @@ public class LivingEntity : MonoBehaviour
     {
         GameObject.Find("AllyBase").GetComponent<PointControl>().point += dropPoint;
         pointGiven = true;
+    }
+
+    protected void declare(int flag)
+    {
+        if(flag==1)
+        {
+            canvas = GameObject.Find("Canvas");
+            Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
+            hpBar = Instantiate(hp, canvas.transform).GetComponent<RectTransform>();
+            hpBar.position = hpBarPosition;
+            hpBar.localScale = new Vector3(2, 1, 1);
+            h = 100.0f;
+        }
+
+        if(flag==2)
+        {
+            Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
+            hpBarPosition.y += h;
+            if (isDie == false)
+            {
+                hpBar.position = hpBarPosition;
+                hpBar.transform.GetChild(1).localScale = new Vector3(currentHealth / health, 1, 1);
+            }
+        }
+        
     }
 
 }
