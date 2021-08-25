@@ -114,7 +114,7 @@ public class LivingEntity : MonoBehaviour
     {
         isDie = true;
         anim.SetBool("die", true);
-        if (dropPoint != 0) givePoint(dropPoint);
+        if (dropPoint != 0) GivePoint(dropPoint);
         Destroy(hpBar.gameObject);
         Destroy(gameObject, 2);
     }
@@ -231,13 +231,13 @@ public class LivingEntity : MonoBehaviour
         if (currentHealth < 0) currentHealth = 0;
     }
 
-    public void givePoint(int dropPoint)
+    public void GivePoint(int dropPoint)
     {
         GameObject.Find("AllyBase").GetComponent<PointControl>().point += dropPoint;
         pointGiven = true;
     }
 
-    protected void declare(int flag)
+    protected void Declare(int flag)
     {
         if(flag==1)
         {

@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 3787128569919571960}
   - component: {fileID: 915520454450398699}
   m_Layer: 0
-  m_Name: enemy_1
+  m_Name: "\uD558\uAE09 \uC545\uB9C8"
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -530,12 +530,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 150
-  moveSpeed: 1.25
-  attackSpeed: 1
   damage: 30
+  defense: 10
+  pierce: 10
+  attackSpeed: 1
+  moveSpeed: 1.25
+  dropPoint: 5
   hp: {fileID: 5605934118861126362, guid: 500b9505408d3824d9281fedc541af77, type: 3}
   canvas: {fileID: 1631296575084980, guid: 2e1151cbd0a77a847ab536b0f05cb03c, type: 3}
-  dropPoint: 5
 --- !u!1 &7509113632677348909
 GameObject:
   m_ObjectHideFlags: 0

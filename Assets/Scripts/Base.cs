@@ -19,7 +19,7 @@ public class Base : LivingEntity
         currentHealth = health;
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;
-        declare(1);
+        Declare(1);
         
         resultWindow = GameObject.Find("Canvas").transform.Find("ResultWindow").gameObject;
         resultText = resultWindow.transform.Find("ResultText").GetComponent<Text>();
@@ -34,7 +34,7 @@ public class Base : LivingEntity
         UI = GameObject.FindGameObjectsWithTag("UI");
 
 
-        declare(2);
+        Declare(2);
 
         if (currentHealth <= 0 & !isDie)
         {
