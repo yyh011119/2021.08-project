@@ -52,5 +52,10 @@ public class GameControl : MonoBehaviour
         SceneManager.LoadScene("StartScene");
     }
 
+    public void stageScreen()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("LevelScene");
+    }
 
 }
