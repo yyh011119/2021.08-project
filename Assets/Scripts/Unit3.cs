@@ -25,6 +25,7 @@ public class Unit3 : LivingEntity
         while (true)
         {
             yield return new WaitForSeconds(attackDelay / attackSpeed);
+            if (!EnemyCheck()) break;
             Melee_MultiAttack();
             yield return new WaitForSeconds((1 - attackDelay) / attackSpeed);
             if (!EnemyCheck()) break;

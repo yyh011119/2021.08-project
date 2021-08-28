@@ -8,10 +8,6 @@ public class LivingEntity : MonoBehaviour
     protected GameObject detect_Collider;
     protected Rigidbody2D rigid;
 
-    protected float attackTime;
-    protected float dieTime;
-    protected float runTime;
-
     public float health;
     protected float currentHealth;
     public float damage;
