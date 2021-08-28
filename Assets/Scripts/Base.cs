@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Base : LivingEntity
 {
@@ -19,7 +20,7 @@ public class Base : LivingEntity
         currentHealth = health;
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;
-        Declare(1);
+        HpbarCreate(1);
         
         resultWindow = GameObject.Find("Canvas").transform.Find("ResultWindow").gameObject;
         resultText = resultWindow.transform.Find("ResultText").GetComponent<Text>();
@@ -34,7 +35,7 @@ public class Base : LivingEntity
         UI = GameObject.FindGameObjectsWithTag("UI");
 
 
-        Declare(2);
+        HpbarCreate(2);
 
         if (currentHealth <= 0 & !isDie)
         {
@@ -48,13 +49,17 @@ public class Base : LivingEntity
     {
         
         resultWindow.SetActive(true);
+        resultWindow.transform.SetAsLastSibling();
         if(this.tag == "Ally")
         {
             resultText.text = "Game Over";
+            resultWindow.transform.Find("Retry").gameObject.SetActive(true);
         }
         if (this.tag == "Enemy")
         {
             resultText.text = "You Win";
+            resultWindow.transform.Find("ToStage").gameObject.SetActive(true);
+            PlayerPrefs.SetInt("Level",(SceneManager.GetActiveScene().buildIndex));
         }
 
 

@@ -24,38 +24,16 @@ public class CreateEnemy : MonoBehaviour
         waveMax = Mathf.Min(enemyTime.Length, enemyWave.Length);
         wave2Max = Mathf.Min(enemyTime2.Length, enemyWave2.Length) ;
         basecon = GameObject.Find("EnemyBase").GetComponent<Base>();
+        StartCoroutine("wave");
+        StartCoroutine("wave2");
     }
 
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        time2 += Time.deltaTime;
         HpPercent = basecon.hpPercent;
 
-
-        if(waveMax>waveNumber)
-        {
-            if (time >= enemyTime[waveNumber])
-            {
-                enemycreate(enemyWave[waveNumber]);
-
-                waveNumber++;
-                time = 0;
-            }
-        }
-
-        if (wave2Max > wave2Number && HpPercent < 0.5)
-        {
-            if (time2 >= enemyTime2[wave2Number])
-            {
-                enemycreate(enemyWave2[wave2Number]);
-
-                wave2Number++;
-                time2 = 0;
-            }
-        }
-
+        
     }
     
     public void enemycreate(int n)
@@ -63,6 +41,41 @@ public class CreateEnemy : MonoBehaviour
         Debug.Log("created!");
         GameObject go = GameObject.Instantiate(this.enemy[n]);
         go.transform.position = this.transform.Find("SpawnPoint").position;
+    }
+
+    IEnumerator wave()
+    {
+
+        while (waveMax > waveNumber)
+        {
+            enemycreate(enemyWave[waveNumber]);
+
+            waveNumber++;
+
+
+            yield return new WaitForSeconds(enemyTime[waveNumber]);
+        }
+    }
+
+    IEnumerator wave2()
+    {
+        while (wave2Max > wave2Number)
+        {
+            if(HpPercent<0.5)
+            {
+                enemycreate(enemyWave2[wave2Number]);
+
+                wave2Number++;
+
+
+                yield return new WaitForSeconds(enemyTime2[wave2Number]);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            
+        }
     }
 
     /*

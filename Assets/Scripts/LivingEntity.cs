@@ -52,13 +52,15 @@ public class LivingEntity : MonoBehaviour
     protected virtual void Update()
     {
 
-        Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
-        hpBarPosition.y += h;
-        if(isDie==false)
-        {
-            hpBar.position = hpBarPosition;
-            hpBar.transform.GetChild(1).localScale = new Vector3(currentHealth / health, 1, 1);
-        }
+        //Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
+        //hpBarPosition.y += h;
+        //if(isDie==false)
+        //{
+        //    hpBar.position = hpBarPosition;
+        //    hpBar.transform.GetChild(1).localScale = new Vector3(currentHealth / health, 1, 1);
+        //}
+
+        HpbarCreate(2);
 
         DieCheck();
         AnimSpeedCheck();
@@ -233,7 +235,7 @@ public class LivingEntity : MonoBehaviour
         pointGiven = true;
     }
 
-    protected void Declare(int flag)
+    protected void HpbarCreate(int flag)
     {
         if(flag==1)
         {
