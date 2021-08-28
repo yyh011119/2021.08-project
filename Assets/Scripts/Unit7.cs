@@ -13,9 +13,6 @@ public class Unit7 : LivingEntity
         Bow0 = GameObject.Find("Bow0").GetComponent<SpriteRenderer>();
         Bow1 = GameObject.Find("Bow1").GetComponent<SpriteRenderer>();
         Bow2 = GameObject.Find("Bow2").GetComponent<SpriteRenderer>();
-        color0 = Bow0.color;
-        color1 = Bow1.color;
-        color2 = Bow2.color;
         StartCoroutine(Run());
     }
 
