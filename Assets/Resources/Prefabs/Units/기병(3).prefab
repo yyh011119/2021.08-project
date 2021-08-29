@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 6769462626657729241}
   - component: {fileID: 5826373339868448434}
   m_Layer: 0
-  m_Name: unit_3
+  m_Name: "\uAE30\uBCD1(3)"
   m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,12 +443,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeab6ad05aea3874fb6b48eae445529f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 280
+  health: 480
   damage: 40
   defense: 16
   pierce: 16
   attackSpeed: 1
   moveSpeed: 2.5
+  dropPoint: 0
   hp: {fileID: 414299088961597312, guid: c527f7071a5b61a4eaffc6febd6076b5, type: 3}
   canvas: {fileID: 1631296575084980, guid: 2e1151cbd0a77a847ab536b0f05cb03c, type: 3}
 --- !u!1 &93199972810207102

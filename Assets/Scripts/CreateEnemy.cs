@@ -38,7 +38,6 @@ public class CreateEnemy : MonoBehaviour
     
     public void enemycreate(int n)
     {
-        Debug.Log("created!");
         GameObject go = GameObject.Instantiate(this.enemy[n]);
         go.transform.position = this.transform.Find("SpawnPoint").position;
     }

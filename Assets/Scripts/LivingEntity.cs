@@ -194,7 +194,7 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    protected void Ranged_SingleAttack()
+    protected float Ranged_SingleAttack()
     {
         target = null;
         shortest = 999999;
@@ -212,12 +212,19 @@ public class LivingEntity : MonoBehaviour
                 }
             }
         }
-        if (target != null) target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, shortest/100);
+        if (target != null)
+        {
+            target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, shortest / 100);
+            return shortest;
+        }
+        else return 0;
     }
 
     public void TakeDamage(float damage, float pierce, float delay)
     {
-        float totalDamage = damage + pierce * 2 - currentDefense;
+        float totalReduction = (currentDefense - pierce) * 2;
+        if (totalReduction < 0) totalReduction = 0;
+        float totalDamage = damage - totalReduction;
         if (totalDamage <= 0) totalDamage = 1;
         StartCoroutine(GiveDamage(totalDamage, delay));
     }

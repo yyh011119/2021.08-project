@@ -3,23 +3,31 @@ using UnityEngine;
 
 public class Unit7 : LivingEntity
 {
-    private float attackDelay = 0.75f;
-    SpriteRenderer Bow0, Bow1, Bow2;
-    Color color0, color1, color2;
+    private float attackDelay = 0.63f;
+    GameObject projectile;
+    private SpriteRenderer bow0, bow1, bow2, arrow0;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        Bow0 = GameObject.Find("Bow0").GetComponent<SpriteRenderer>();
-        Bow1 = GameObject.Find("Bow1").GetComponent<SpriteRenderer>();
-        Bow2 = GameObject.Find("Bow2").GetComponent<SpriteRenderer>();
+        bow0 = transform.GetChild(0).GetChild(1).Find("Bow0").gameObject.GetComponent<SpriteRenderer>();
+        bow1 = transform.GetChild(0).GetChild(1).Find("Bow1").gameObject.GetComponent<SpriteRenderer>();
+        bow2 = transform.GetChild(0).GetChild(1).Find("Bow2").gameObject.GetComponent<SpriteRenderer>();
+        arrow0 = transform.GetChild(0).GetChild(1).Find("Arrow").gameObject.GetComponent<SpriteRenderer>();
+        projectile = transform.GetChild(0).GetChild(1).Find("Arrow").gameObject;
         StartCoroutine(Run());
     }
 
     protected override void Update()
     {
         base.Update();
-        if (isDie) StopAllCoroutines();
+        if (isDie)
+        {
+            bow2.color = new Color(1, 1, 1, 0);
+            bow0.color = new Color(1, 1, 1, 1);
+            arrow0.color = new Color(1, 1, 1, 0);
+            StopAllCoroutines();
+        }
     }
 
     private IEnumerator Attack()
@@ -27,7 +35,7 @@ public class Unit7 : LivingEntity
         anim.SetInteger("state", 2);
         while (true)
         {
-            yield return StartCoroutine(BowFade());
+            yield return new WaitForSeconds((attackDelay) / attackSpeed);
             if (!EnemyCheck()) break;
             Ranged_SingleAttack();
             yield return new WaitForSeconds((1 - attackDelay) / attackSpeed);
@@ -45,28 +53,6 @@ public class Unit7 : LivingEntity
             yield return null;
         }
         yield return StartCoroutine(Attack());
-    }
-
-    private IEnumerator BowFade()
-    {
-        float f = 1f;
-        while (f > 0)
-        {
-            f -= 0.1f;
-            Bow0.color = new Color(1, 1, 1, f);
-            Bow1.color = new Color(1, 1, 1, 1-f);
-            yield return new WaitForSeconds(0.05f * attackDelay / attackSpeed);
-        }
-        f = 1f;
-        while (f > 0)
-        {
-            f -= 0.1f;
-            Bow1.color = new Color(1, 1, 1, f);
-            Bow2.color = new Color(1, 1, 1, 1 - f);
-            yield return new WaitForSeconds(0.05f * attackDelay / attackSpeed);
-        }
-        Bow2.color = new Color(1, 1, 1, 0);
-        Bow0.color = new Color(1, 1, 1, 1);
     }
 
 }
