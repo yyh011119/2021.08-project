@@ -8,6 +8,7 @@ public class LevelControl : MonoBehaviour
 {
     private GameObject levelWindow;
     private int level;
+    private int maxlevel;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,9 @@ public class LevelControl : MonoBehaviour
         level = PlayerPrefs.GetInt("Level");
         levelWindow = GameObject.Find("Canvas").transform.Find("Stage").gameObject;
 
-        levelLock(2);
+
+        maxlevel = 2;
+        levelLock(maxlevel);
     }
 
     // Update is called once per frame
@@ -36,7 +39,7 @@ public class LevelControl : MonoBehaviour
     public void levelCheck(int n)
     {
         
-        if (n <= level)
+        if (n <= level && n<=maxlevel)
         {
             SceneManager.LoadScene(n+1);
         }
@@ -53,6 +56,11 @@ public class LevelControl : MonoBehaviour
             }
             n--;
         }
+    }
+
+    public void goShop()
+    {
+        SceneManager.LoadScene("ShopScene");
     }
 
 }

@@ -16,12 +16,17 @@ public class Base : LivingEntity
     // Start is called before the first frame update
     protected override void Start()
     {
+        if (this.tag == "Ally")
+        {
+            health += PlayerPrefs.GetInt("Upgrade_Hp")*50;
+        }
+
 
         currentHealth = health;
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;
         HpbarCreate(1);
-        
+
         resultWindow = GameObject.Find("Canvas").transform.Find("ResultWindow").gameObject;
         resultText = resultWindow.transform.Find("ResultText").GetComponent<Text>();
     }
