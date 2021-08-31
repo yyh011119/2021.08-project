@@ -24,4 +24,10 @@ public class ButtonControl : MonoBehaviour
     {
         create.unitCreate(unitType);
     }
+
+    public void UpgradeButton()
+    {
+        this.transform.parent.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        this.transform.parent.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+    }
 }

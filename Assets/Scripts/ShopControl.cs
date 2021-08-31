@@ -44,7 +44,7 @@ public class ShopControl : MonoBehaviour
 
     }
 
-    public void buy(int cost)
+    public void buyCastleHp(int cost)
     {
         if (!PlayerPrefs.HasKey("Upgrade_Hp"))
         {
@@ -57,6 +57,22 @@ public class ShopControl : MonoBehaviour
             int upgrade = PlayerPrefs.GetInt("Upgrade_Hp");
             upgrade++;
             PlayerPrefs.SetInt("Upgrade_Hp", upgrade);
+        }
+    }
+
+    public void buyPointSpeed(int cost)
+    {
+        if (!PlayerPrefs.HasKey("Upgrade_Point"))
+        {
+            PlayerPrefs.SetInt("Upgrade_Point", 0);
+        }
+
+        if (gold >= cost)
+        {
+            PlayerPrefs.SetInt("Gold", gold - cost);
+            int upgrade = PlayerPrefs.GetInt("Upgrade_Point");
+            upgrade++;
+            PlayerPrefs.SetInt("Upgrade_Point", upgrade);
         }
     }
 

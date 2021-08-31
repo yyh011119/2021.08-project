@@ -9,6 +9,7 @@ public class LevelControl : MonoBehaviour
     private GameObject levelWindow;
     private int level;
     private int maxlevel;
+    private Text goldText;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class LevelControl : MonoBehaviour
 
         level = PlayerPrefs.GetInt("Level");
         levelWindow = GameObject.Find("Canvas").transform.Find("Stage").gameObject;
+        goldText = GameObject.Find("Gold").GetComponent<Text>();
 
 
         maxlevel = 2;
@@ -34,6 +36,11 @@ public class LevelControl : MonoBehaviour
             Debug.Log("sssssssssssssss");
             PlayerPrefs.DeleteAll();
         }
+        if(PlayerPrefs.HasKey("Gold"))
+        {
+            goldText.text = ("Gold: " + PlayerPrefs.GetInt("Gold"));
+        }
+
     }
 
     public void levelCheck(int n)
