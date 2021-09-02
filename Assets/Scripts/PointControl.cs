@@ -18,6 +18,7 @@ public class PointControl : MonoBehaviour
     protected virtual void Start()
     {
         pointText = GameObject.Find("Point").GetComponent<Text>();
+        checkTime -= PlayerPrefs.GetInt("Upgrade_Point") * 0.01f;
         StartCoroutine(PointUpdate(checkTime));
     }
 
