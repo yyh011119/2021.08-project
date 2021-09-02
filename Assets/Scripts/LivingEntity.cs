@@ -157,48 +157,32 @@ public class LivingEntity : MonoBehaviour
 
     protected void Melee_MultiAttack()
     {
-        int sum = 0;
-
         Vector2 attackSpot = transform.Find("Detect").position;
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
+        target = null;
+        shortest = 999999;
         foreach (Collider2D collider in collider2Ds)
         {
             if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
             {
-                sum++;
-            }
-        }
-
-        if (sum >= 3)
-        {
-            foreach (Collider2D collider in collider2Ds)
-            {
-                if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
+                float distance = Vector2.Distance(transform.position, collider.transform.position);
+                if (distance < shortest)
                 {
-                    collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.75f, currentPierce * 0.75f, 0);
-                    target.GetComponent<LivingEntity>().TakeDebuff(stunTime, 0);
+                    target = collider;
+                    shortest = distance;
                 }
             }
         }
-        else
+        if (target != null)
         {
-            target = null;
-            shortest = 999999;
-            foreach (Collider2D collider in collider2Ds)
+            target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+            target.GetComponent<LivingEntity>().TakeDebuff(stunTime, 0);
+        }
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
             {
-                if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
-                {
-                    float distance = Vector2.Distance(transform.position, collider.transform.position);
-                    if (distance < shortest)
-                    {
-                        target = collider;
-                        shortest = distance;
-                    }
-                }
-            }
-            if (target != null)
-            {
-                target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+                collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.5f, currentPierce * 0.5f, 0);
                 target.GetComponent<LivingEntity>().TakeDebuff(stunTime, 0);
             }
         }
@@ -263,7 +247,6 @@ public class LivingEntity : MonoBehaviour
 
     protected IEnumerator Stun(float time, float delay)
     {
-        Debug.Log("Stunned!");
         yield return new WaitForSeconds(delay);
         StopCoroutine("Run");
         StopCoroutine("Attack");
@@ -280,7 +263,7 @@ public class LivingEntity : MonoBehaviour
 
     protected void HpbarCreate(int flag)
     {
-        if(flag==1)
+        if (flag == 1)
         {
             canvas = GameObject.Find("Canvas");
             Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
@@ -290,7 +273,7 @@ public class LivingEntity : MonoBehaviour
             h = 100.0f;
         }
 
-        if(flag==2)
+        if (flag == 2)
         {
             Vector3 hpBarPosition = Camera.main.WorldToScreenPoint(transform.position);
             hpBarPosition.y += h;
@@ -300,7 +283,7 @@ public class LivingEntity : MonoBehaviour
                 hpBar.transform.GetChild(1).localScale = new Vector3(currentHealth / health, 1, 1);
             }
         }
-        
+
     }
 
 

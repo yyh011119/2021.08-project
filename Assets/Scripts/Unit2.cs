@@ -29,6 +29,7 @@ public class Unit2 : LivingEntity
             Melee_MultiAttack();
             yield return new WaitForSeconds((1 - attackDelay) / attackSpeed);
             if (!EnemyCheck()) break;
+            Debug.Log("Attacking!");
         }
         yield return StartCoroutine("Run");
     }
