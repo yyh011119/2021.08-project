@@ -9,7 +9,7 @@ public class Enemy1 : LivingEntity
     protected override void Start()
     {
         base.Start();
-        StartCoroutine(Run());
+        StartCoroutine("Run");
     }
 
     // Update is called once per frame
@@ -30,18 +30,7 @@ public class Enemy1 : LivingEntity
             yield return new WaitForSeconds((1 - attackDelay) / attackSpeed);
             if (!EnemyCheck()) break;
         }
-        yield return StartCoroutine(Run());
-    }
-
-    private IEnumerator Run()
-    {
-        anim.SetInteger("state", 1);
-        while (!EnemyCheck())
-        {
-            transform.localPosition += new Vector3(currentMoveSpeed * Time.deltaTime, 0, 0);
-            yield return null;
-        }
-        yield return StartCoroutine(Attack());
+        yield return StartCoroutine("Run");
     }
 
 }

@@ -1,22 +1,24 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Unit2 : LivingEntity
+public class Unit8 : LivingEntity
 {
-    private float attackDelay = 0.25f;
-
+    private float attackDelay = 0.14f;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        stunTime = 0.5f;
         StartCoroutine("Run");
     }
 
-    // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        if (isDie) StopAllCoroutines();
+        if (isDie)
+        {
+            StopAllCoroutines();
+        }
     }
 
     private IEnumerator Attack()
@@ -26,15 +28,11 @@ public class Unit2 : LivingEntity
         {
             yield return new WaitForSeconds(attackDelay / attackSpeed);
             if (!EnemyCheck()) break;
-            Melee_MultiAttack();
+            Ranged_SingleAttack(500);
             yield return new WaitForSeconds((1 - attackDelay) / attackSpeed);
             if (!EnemyCheck()) break;
         }
         yield return StartCoroutine("Run");
     }
 
-
 }
-
-
-

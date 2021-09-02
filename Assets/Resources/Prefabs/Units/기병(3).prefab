@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 7537899564367856}
   - component: {fileID: 8162382774182938823}
   - component: {fileID: 6769462626657729241}
-  - component: {fileID: 5826373339868448434}
+  - component: {fileID: 7007630062394171313}
   m_Layer: 0
   m_Name: "\uAE30\uBCD1(3)"
   m_TagString: Ally
@@ -431,7 +431,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5826373339868448434
+--- !u!114 &7007630062394171313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -440,13 +440,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 93134550341287384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeab6ad05aea3874fb6b48eae445529f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3df45bada477a2244bb8d7ae9f8255e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 480
   damage: 40
-  defense: 16
-  pierce: 16
+  defense: 20
+  pierce: 20
   attackSpeed: 1
   moveSpeed: 2.5
   dropPoint: 0

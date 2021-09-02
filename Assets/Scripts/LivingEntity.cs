@@ -21,6 +21,7 @@ public class LivingEntity : MonoBehaviour
     public float moveSpeed;
     protected float currentMoveSpeed;
     public int dropPoint;
+    protected float stunTime = 0;
 
     protected bool isDie = false;
     protected bool pointGiven = false;
@@ -147,7 +148,11 @@ public class LivingEntity : MonoBehaviour
                 }
             }
         }
-        if(target!=null) target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+        if (target != null)
+        {
+            target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+            target.GetComponent<LivingEntity>().TakeDebuff(stunTime, 0);
+        }
     }
 
     protected void Melee_MultiAttack()
@@ -171,6 +176,7 @@ public class LivingEntity : MonoBehaviour
                 if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
                 {
                     collider.GetComponent<LivingEntity>().TakeDamage(currentDamage * 0.75f, currentPierce * 0.75f, 0);
+                    target.GetComponent<LivingEntity>().TakeDebuff(stunTime, 0);
                 }
             }
         }
@@ -190,11 +196,15 @@ public class LivingEntity : MonoBehaviour
                     }
                 }
             }
-            if (target != null) target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+            if (target != null)
+            {
+                target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+                target.GetComponent<LivingEntity>().TakeDebuff(stunTime, 0);
+            }
         }
     }
 
-    protected float Ranged_SingleAttack()
+    protected void Ranged_SingleAttack(float relativeSpeed)
     {
         target = null;
         shortest = 999999;
@@ -214,10 +224,20 @@ public class LivingEntity : MonoBehaviour
         }
         if (target != null)
         {
-            target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, shortest / 100);
-            return shortest;
+            target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, shortest / relativeSpeed);
+            target.GetComponent<LivingEntity>().TakeDebuff(stunTime, shortest / relativeSpeed);
         }
-        else return 0;
+    }
+
+    protected IEnumerator Run()
+    {
+        anim.SetInteger("state", 1);
+        while (!EnemyCheck())
+        {
+            transform.localPosition += new Vector3(currentMoveSpeed * Time.deltaTime, 0, 0);
+            yield return null;
+        }
+        yield return StartCoroutine("Attack");
     }
 
     public void TakeDamage(float damage, float pierce, float delay)
@@ -234,6 +254,22 @@ public class LivingEntity : MonoBehaviour
         yield return new WaitForSeconds(delay);
         currentHealth = currentHealth - totalDamage;
         if (currentHealth < 0) currentHealth = 0;
+    }
+
+    protected void TakeDebuff(float stunTime, float delay)
+    {
+        if (stunTime != 0 && anim.GetInteger("state") != 0) StartCoroutine(Stun(stunTime, delay));
+    }
+
+    protected IEnumerator Stun(float time, float delay)
+    {
+        Debug.Log("Stunned!");
+        yield return new WaitForSeconds(delay);
+        StopCoroutine("Run");
+        StopCoroutine("Attack");
+        anim.SetInteger("state", 0);
+        yield return new WaitForSeconds(time);
+        StartCoroutine("Run");
     }
 
     public void GivePoint(int dropPoint)
@@ -266,5 +302,7 @@ public class LivingEntity : MonoBehaviour
         }
         
     }
+
+
 
 }
