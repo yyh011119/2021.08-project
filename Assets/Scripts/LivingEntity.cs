@@ -22,6 +22,7 @@ public class LivingEntity : MonoBehaviour
     protected float currentMoveSpeed;
     public int dropPoint;
     protected float stunTime = 0;
+    protected float revival = 0;
 
     protected bool isDie = false;
     protected bool pointGiven = false;
@@ -105,7 +106,11 @@ public class LivingEntity : MonoBehaviour
     {
         if (currentHealth <= 0 & !isDie)
         {
-            Die();
+            if(revival>0)
+            {
+                Revive();
+            }
+            else Die();
         }
     }
 
@@ -116,6 +121,19 @@ public class LivingEntity : MonoBehaviour
         if (dropPoint != 0) GivePoint(dropPoint);
         Destroy(hpBar.gameObject);
         Destroy(gameObject, 2);
+    }
+
+
+    protected void Revive()
+    {
+        StopAllCoroutines();
+        currentHealth = health;
+        revival -= 1;
+        foreach (ColorChange colorChange in this.GetComponentsInChildren<ColorChange>())
+        {
+            colorChange.RevivalColor();
+        }
+        StartCoroutine(Stun(0, 0.5f));
     }
 
     protected bool EnemyCheck() //사거리 내 적 존재여부 반환
@@ -129,6 +147,7 @@ public class LivingEntity : MonoBehaviour
         return false;
     }
 
+    //공격 종류들
     protected void Melee_SingleAttack()
     {
         target = null;
@@ -223,12 +242,13 @@ public class LivingEntity : MonoBehaviour
         }
         yield return StartCoroutine("Attack");
     }
-
+    
+    //데미지 및 상태이상
     public void TakeDamage(float damage, float pierce, float delay)
     {
-        float totalReduction = (currentDefense - pierce) * 2;
-        if (totalReduction < 0) totalReduction = 0;
-        float totalDamage = damage - totalReduction;
+        float totalMultiplier = (100 - currentDefense + pierce) / 100;
+        if (totalMultiplier > 1) totalMultiplier = 1.1f;
+        float totalDamage = damage * totalMultiplier;
         if (totalDamage <= 0) totalDamage = 1;
         StartCoroutine(GiveDamage(totalDamage, delay));
     }

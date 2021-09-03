@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Enemy1 : LivingEntity
+public class Enemy_Devil : LivingEntity
 {
     private float attackDelay = 0.55f;
 
