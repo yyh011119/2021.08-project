@@ -79,6 +79,8 @@ public class Base : LivingEntity
                 getgold = Random.Range(5, 30);
             }
 
+            getgold = Mathf.FloorToInt((getgold * (1 + PlayerPrefs.GetInt("Upgrade_Gold") * 0.01f)));
+
             gold += getgold;
             goldShow.transform.Find("GoldText").gameObject.GetComponent<Text>().text = "X"+getgold;
             PlayerPrefs.SetInt("Gold",gold);

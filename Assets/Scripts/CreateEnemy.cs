@@ -50,14 +50,22 @@ public class CreateEnemy : MonoBehaviour
             enemycreate(enemyWave[waveNumber]);
 
             waveNumber++;
-
-
             yield return new WaitForSeconds(enemyTime[waveNumber]);
         }
+
+        Debug.Log("aaaaaaaa");
+        waveNumber = 0;
+
+        if(waveMax != 0)
+        {
+            StartCoroutine("wave");
+        }
+
     }
 
     IEnumerator wave2()
     {
+        yield return new WaitForSeconds(0.1f);
         while (wave2Max > wave2Number)
         {
             if(HpPercent<0.5)
@@ -75,6 +83,7 @@ public class CreateEnemy : MonoBehaviour
             }
             
         }
+        
     }
 
     /*

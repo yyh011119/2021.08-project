@@ -32,49 +32,17 @@ public class ShopControl : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.G))
         {
-            Debug.Log("sssssssssssssss");
             PlayerPrefs.SetInt("Gold", gold + 100);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("sssssssssssssss");
             PlayerPrefs.DeleteAll();
         }
 
     }
 
-    public void buyCastleHp(int cost)
-    {
-        if (!PlayerPrefs.HasKey("Upgrade_Hp"))
-        {
-            PlayerPrefs.SetInt("Upgrade_Hp", 0);
-        }
-
-        if(gold>=cost)
-        {
-            PlayerPrefs.SetInt("Gold", gold - cost);
-            int upgrade = PlayerPrefs.GetInt("Upgrade_Hp");
-            upgrade++;
-            PlayerPrefs.SetInt("Upgrade_Hp", upgrade);
-        }
-    }
-
-    public void buyPointSpeed(int cost)
-    {
-        if (!PlayerPrefs.HasKey("Upgrade_Point"))
-        {
-            PlayerPrefs.SetInt("Upgrade_Point", 0);
-        }
-
-        if (gold >= cost)
-        {
-            PlayerPrefs.SetInt("Gold", gold - cost);
-            int upgrade = PlayerPrefs.GetInt("Upgrade_Point");
-            upgrade++;
-            PlayerPrefs.SetInt("Upgrade_Point", upgrade);
-        }
-    }
+    
 
     public void stageScreen()
     {
