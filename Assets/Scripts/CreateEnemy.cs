@@ -50,6 +50,11 @@ public class CreateEnemy : MonoBehaviour
             enemycreate(enemyWave[waveNumber]);
 
             waveNumber++;
+
+            if(waveMax == waveNumber)
+            {
+                break;
+            }
             yield return new WaitForSeconds(enemyTime[waveNumber]);
         }
 

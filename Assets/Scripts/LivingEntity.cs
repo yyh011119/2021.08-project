@@ -69,12 +69,16 @@ public class LivingEntity : MonoBehaviour
 
     protected void Determine_Stats()
     {
+        damage *= (1 + PlayerPrefs.GetInt("Upgrade_Attack") * 0.01f);
+
+
+
         currentHealth = health;
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;
         currentDefense = defense;
         currentPierce = pierce;
-
+        
         //아군 방향 속도
         if (tag == "Enemy")
         {

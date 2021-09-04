@@ -204,6 +204,11 @@ PrefabInstance:
       propertyPath: cost.Array.data[5]
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1681304403693015819, guid: 7bda5b6cd654c854cb97e2251cbeb15f,
+        type: 3}
+      propertyPath: checkTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1681304403693016054, guid: 7bda5b6cd654c854cb97e2251cbeb15f,
         type: 3}
       propertyPath: m_Name
@@ -956,7 +961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy:
   - {fileID: 7509051282331861241, guid: 2ed9508d9ca42d346b3856550c97346b, type: 3}
-  enemyWave: 
+  enemyWave: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   enemyTime:
   - 1
   - 0.5
@@ -968,76 +973,6 @@ MonoBehaviour:
   - 1
   - 0.8
   - 2
-  - 0.8
-  - 1
-  - 0.8
-  - 2
-  - 1
-  - 1
-  - 0.5
-  - 0.3
-  - 0.8
-  - 0
-  - 0.5
-  - 0.2
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.5
-  - 0.5
-  - 0.5
-  - 0.5
-  - 0.5
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.8
-  - 0.2
-  - 0.8
-  - 0.2
-  - 0.8
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.2
-  - 0.8
-  - 0.5
-  - 0.2
-  - 0.8
-  - 0.2
-  - 0.8
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.2
-  - 0.8
-  - 0.2
-  - 0.8
-  - 0.2
-  - 0.2
-  - 0.5
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.8
-  - 0.2
   enemyWave2: 0000000000000000000000000000000000000000
   enemyTime2:
   - 0.1
