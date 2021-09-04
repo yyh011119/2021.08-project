@@ -42,7 +42,7 @@ public class GameControl : MonoBehaviour
     public void restartButton()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("BattleScene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
 

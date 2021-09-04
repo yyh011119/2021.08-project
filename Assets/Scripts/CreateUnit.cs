@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+
 public class CreateUnit : PointControl
 {
 
@@ -29,6 +30,8 @@ public class CreateUnit : PointControl
             point -= cost[n];
         }
     }
+
+
 
 }
 
