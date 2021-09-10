@@ -70,7 +70,7 @@ public class LivingEntity : MonoBehaviour
     protected void Determine_Stats()
     {
         damage *= (1 + PlayerPrefs.GetInt("Upgrade_Attack") * 0.01f);
-
+        moveSpeed *= (1 + PlayerPrefs.GetInt("Upgrade_Speed") * 0.05f);
 
 
         currentHealth = health;
