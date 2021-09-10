@@ -320,7 +320,7 @@ public class LivingEntity : MonoBehaviour
             hpBar = Instantiate(hp, canvas.transform).GetComponent<RectTransform>();
             hpBar.position = hpBarPosition;
             hpBar.localScale = new Vector3(2, 1, 1);
-            h = 100.0f;
+            h = 250.0f;
         }
 
         if (flag == 2)

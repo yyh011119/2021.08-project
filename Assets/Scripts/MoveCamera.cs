@@ -17,11 +17,11 @@ public class MoveCamera : MonoBehaviour
     void Update()
     {
         //카메라 좌우키로 이동
-        if (Input.GetKey(KeyCode.RightArrow) && this.gameObject.transform.position.x < (mapLength - 20) / 2)
+        if (Input.GetKey(KeyCode.RightArrow) && this.gameObject.transform.position.x < (mapLength - 10) / 2)
         {
             transform.position += new Vector3(backgroundSpeed*Time.deltaTime, 0, 0) ;
         }
-        if (Input.GetKey(KeyCode.LeftArrow) && this.gameObject.transform.position.x > -(mapLength - 20) / 2)
+        if (Input.GetKey(KeyCode.LeftArrow) && this.gameObject.transform.position.x > -(mapLength - 10) / 2)
         {
             transform.position += new Vector3(-backgroundSpeed * Time.deltaTime, 0, 0);
         }

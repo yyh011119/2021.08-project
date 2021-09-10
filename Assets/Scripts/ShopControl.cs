@@ -29,17 +29,6 @@ public class ShopControl : MonoBehaviour
     {
         gold = PlayerPrefs.GetInt("Gold");
         goldText.text = ("Gold: " + gold);
-
-        if (Input.GetKeyUp(KeyCode.G))
-        {
-            PlayerPrefs.SetInt("Gold", gold + 100);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            PlayerPrefs.DeleteAll();
-        }
-
     }
 
     
