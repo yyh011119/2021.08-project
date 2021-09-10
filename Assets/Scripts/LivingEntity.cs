@@ -152,6 +152,7 @@ public class LivingEntity : MonoBehaviour
     {
         target = null;
         shortest = 999999;
+        float distance;
         Vector2 attackSpot = transform.Find("Detect").position;
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
         foreach (Collider2D collider in collider2Ds)
@@ -159,7 +160,7 @@ public class LivingEntity : MonoBehaviour
             //거리가 가장 가까운 살아있는 타겟 찾기
             if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
             {
-                float distance = Vector2.Distance(transform.position, collider.transform.position);
+                distance = Vector2.Distance(transform.position, collider.transform.position);
                 if (distance < shortest)
                 {
                     target = collider;
@@ -180,11 +181,12 @@ public class LivingEntity : MonoBehaviour
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
         target = null;
         shortest = 999999;
+        float distance;
         foreach (Collider2D collider in collider2Ds)
         {
             if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
             {
-                float distance = Vector2.Distance(transform.position, collider.transform.position);
+                distance = Vector2.Distance(transform.position, collider.transform.position);
                 if (distance < shortest)
                 {
                     target = collider;
@@ -211,13 +213,14 @@ public class LivingEntity : MonoBehaviour
     {
         target = null;
         shortest = 999999;
+        float distance;
         Vector2 attackSpot = transform.Find("Detect").position;
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
         foreach (Collider2D collider in collider2Ds)
         {
             if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
             {
-                float distance = Vector2.Distance(transform.position, collider.transform.position);
+                distance = Vector2.Distance(transform.position, collider.transform.position);
                 if (distance < shortest)
                 {
                     target = collider;
@@ -229,6 +232,29 @@ public class LivingEntity : MonoBehaviour
         {
             target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, shortest / relativeSpeed);
             target.GetComponent<LivingEntity>().TakeDebuff(stunTime, shortest / relativeSpeed);
+        }
+    }
+
+    protected void Witch_attack()
+    {
+        float lowestHealth = 100000;
+        Vector2 attackSpot = transform.Find("Detect").position;
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(attackSpot, detect_Collider.GetComponent<BoxCollider2D>().size, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if ((this.tag == "Ally" && collider.tag == "Enemy" && collider.GetComponent<LivingEntity>().isDie == false) || (this.tag == "Enemy" && collider.tag == "Ally" && collider.GetComponent<LivingEntity>().isDie == false))
+            {
+                if(lowestHealth > collider.GetComponent<LivingEntity>().currentHealth)
+                {
+                    target = collider;
+                    lowestHealth = collider.GetComponent<LivingEntity>().currentHealth;
+                }
+            }
+        }
+        if (target != null)
+        {
+            target.GetComponent<LivingEntity>().TakeDamage(currentDamage, currentPierce, 0);
+            target.GetComponent<LivingEntity>().TakeDebuff(stunTime, 0);
         }
     }
 

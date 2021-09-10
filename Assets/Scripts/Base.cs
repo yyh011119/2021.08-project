@@ -21,8 +21,6 @@ public class Base : LivingEntity
         {
             health += PlayerPrefs.GetInt("Upgrade_Hp")*50;
         }
-
-
         currentHealth = health;
         currentDamage = damage;
         currentAttackSpeed = attackSpeed;

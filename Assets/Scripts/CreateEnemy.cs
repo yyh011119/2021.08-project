@@ -47,10 +47,10 @@ public class CreateEnemy : MonoBehaviour
 
         while (waveMax > waveNumber)
         {
-            enemycreate(enemyWave[waveNumber]);
-
-            waveNumber++;
             yield return new WaitForSeconds(enemyTime[waveNumber]);
+            enemycreate(enemyWave[waveNumber]);
+            waveNumber++;
+
         }
 
         Debug.Log("aaaaaaaa");
